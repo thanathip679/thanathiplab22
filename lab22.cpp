@@ -28,7 +28,73 @@ ComplexNumber ComplexNumber::operator-(const ComplexNumber &c){
 	return ComplexNumber(real-c.real,imag-c.imag);
 }
 
-//Write your code here
+ComplexNumber ComplexNumber::operator*(const ComplexNumber &c){
+	return ComplexNumber((real*c.real) - (imag*c.imag) , (real*c.imag) + (imag*c.real));
+}
+
+ComplexNumber ComplexNumber::operator/(const ComplexNumber &c){
+    double p = pow(c.real,2) + pow(c.imag,2);
+    return ComplexNumber(((real*c.real) + (imag*c.imag))/p, ((imag*c.real) - (real*c.imag))/p);
+}
+
+bool ComplexNumber::operator==(const ComplexNumber &c){
+    if(real == c.real && imag == c.imag) return 1;
+    else return 0;
+}
+
+ComplexNumber operator+(double c, const ComplexNumber &d){
+        return ComplexNumber(c + d.real,d.imag);
+}
+
+ComplexNumber operator-(double c, const ComplexNumber &d){
+    return ComplexNumber(c - d.real,-d.imag);
+}
+
+ComplexNumber operator*(double c, const ComplexNumber &d){
+    return ComplexNumber(c*d.real, c*d.imag);
+}
+
+ComplexNumber operator/(double c, const ComplexNumber &d){
+    double p = pow(d.real,2) + pow(d.imag,2);
+    return ComplexNumber((c*d.real)/p,-(c*d.imag)/p);
+}
+
+bool operator==(double c, const ComplexNumber &d){
+    if(c == d.real && d.imag == 0) return 1;
+    else return 0;
+}
+
+bool operator==(int c, const ComplexNumber &d){
+    if((double)c == d.real && d.imag == 0) return 1;
+    else return 0;
+}
+
+double ComplexNumber::abs(){
+    return sqrt(pow(real,2) + pow(imag,2));
+}
+
+double ComplexNumber::angle(){
+    return atan2(imag,real)*180 / M_PI ;
+}
+
+ostream & operator<<(ostream &os , const ComplexNumber &c){
+    if(c.real != 0 && c.imag == 0){
+        return os << c.real;
+    }
+    
+    if(c.real == 0 && c.imag != 0){
+        return os << c.imag << "i";
+    }
+    
+    if(c.real == 0 && c.imag == 0){
+        return os << "0";
+    }
+    
+    if(c.imag > 0) {
+        return os << c.real << "+" << c.imag << "i";
+    }else return os << c.real << c.imag << "i";
+    
+}
 
 int main(){
 	ComplexNumber a(1.5,2),b(3.2,-2.5),c(-1,1.2);	
